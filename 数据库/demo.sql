@@ -158,4 +158,59 @@ select *from emp order by salary dec limit 1;
 
 #查询的基本操作  分表查询 链表查询
 
+
+
 #分组查询  多表查询 练习  python 链接数据库  pandas 数据处理操作
+#分组查询:分组聚合
+select * from emp;
+#不同性别的员工的平均年龄:在分组后，查询字段只能是分组字段或者其他字段的聚合形式
+select gendern,avg(age) from emp group by gender;3group by 后面更分组字段
+
+#查看不同岗位员工的平均薪资
+select  job_title,avg(salary) from emp group by job_title
+
+#查看不同性别员工的最大，最小年纪和员工的个数
+select gender,max(age),min(age),cout(1) from emp group by gender;
+
+#分组后进行条件判断:查看销售岗位的平均薪资:having:作用于分组后的条件查询,where是在分组前的条件查询
+select job_title,avg(salary) from emp group by job_title having job_title = "sale"
+
+#多表查询:关系型数据库 表和表之间是可以产生关联的:多张表避免数据的冗余
+
+create table dep{#部门表
+    id int primary key,
+    name char (20)
+};
+create table emp{#员工表
+  id int primary key into_increment,
+  name char(20),
+  sex enum('male','female') not null default 'male',
+  age int ,
+  dep_id int
+};
+#emp.dep_id == dep.id
+
+# 查询lala员工的部门名称是什么?多表查询
+#将员工表和部门表进行数据合并,根据指定条件进行数据合并
+select dep.name from emp inner join dep  on emp.dep_id = dep.id  #inner join 内链接 两个表做合并,链表操作 取的是两张表的交集部分
+where emp.name = "lala"
+
+#还有左链接  右链接
+select *from emp left join dep on emp.dep_id = dep.id #取左表的全部数据和两个表的交集部分
+select * from emp right join  dep on emp.dep_id = dep.id #取右表的全部部分和两个表的交集部分
+
+#查询年龄大于25岁的员工姓名以及员工所在部门的名字
+  #查询字段:员工的名字和部门的名字
+select  e.name, d.name from emp as e inner join dep ad d om e.dep_id = d.id
+where age > 25;
+
+#查询平均年龄在25岁以上的部门的名称
+select  d.name from emp as e inner join dep as d on e.dep_id = d.id group by  d.name having avg(e.age) > 25
+
+
+#如果右三张表A,B,C
+A inner join B inner join C
+
+
+
+

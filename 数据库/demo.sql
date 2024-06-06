@@ -211,6 +211,29 @@ select  d.name from emp as e inner join dep as d on e.dep_id = d.id group by  d.
 #如果右三张表A,B,C
 A inner join B inner join C
 
+#条件判断
+create table t_demo{
+    id int(32) not null,
+    name varchar (255) default null,
+    age int(2) default null,
+    num int (3) default null,
+    primary key(`id`)
+};
+select *from t_demo;
+# 根据num对学生做评级
+select *
+case when  num >= 85 then "优秀"
+    when num < 85 && num >=60 then '一般'
+    else '不及格' end
+as 评级
+from t_demo
+
+#开窗函数/窗口函数 mysql 8.0 即及以上的版本才可以用
+#开窗函数/窗口函数 主要作用:排名
+
+#对不同班级的学生根据分数进行排名
+select *, dense_rank() over(partion by caption order by num desc) 排名 from student
+
 
 
 
